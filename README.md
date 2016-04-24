@@ -27,12 +27,19 @@ Functionality: The robot code was basically made to test the TOUCHOSC interface.
 	- Accelstepper library http://www.airspayce.com/mikem/arduino/AccelStepper/
 	  Tutorial can be found here: https://www.pjrc.com/teensy/td_libs_AccelStepper.html
 	- LV-MAXSonar-EZ0 from Sparkfun
-	- self made board to hold the ESP module, with 2 push buttons for reset and setting programming mode, led and connectors for the peripherals.
+	- self made board to hold the ESP module, with 2 push buttons for reset and setting programming mode, 
+	  led and connectors for the peripherals.
 	- Alternative battery holder to hold a 2S Lipo
 	- Alternative motor connections to simplify the wiring on the self made board.
 
 ###TouchOSC: 
-	I discovered this app by accident when I looked at B-Robot and similar projects. Some tests made with Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation, easy to use windows application to create the GUI, easy to load on a second or alternative platform and sizable widgets which are not yet possible on Blynk made me keep OSC for this project. Maybe I missed something on Blynk, at least it was not immediately visible that the features I missed where available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you will need to pay for the user interface you download on your phone or tablet. Here my current design:
+	I discovered this app by accident when I looked at B-Robot and similar projects. Some tests made with 
+	Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation, easy to 
+	use windows application to create the GUI, easy to load on a second or alternative platform and sizable widgets 
+	which are not yet possible on Blynk made me keep OSC for this project. Maybe I missed something on Blynk, at 
+	least it was not immediately visible that the features I missed where available. TouchOSC design tool is available 
+	for free from http://hexler.net/software/touchosc, you will need to pay for the user interface you download 
+	on your phone or tablet. Here my current design:
 
 ![alt tag](pics/osc_display.png)
 ###OSC config: 
