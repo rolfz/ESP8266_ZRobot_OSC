@@ -8332,6 +8332,9 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <sheets>
 <sheet>
 <plain>
+<text x="157.48" y="25.4" size="1.778" layer="91">Motor A connected to GPIO 16,14,12,13</text>
+<text x="157.48" y="22.86" size="1.778" layer="91">Motor B connected to GPIO 4,5,0,2</text>
+<text x="157.48" y="20.32" size="1.778" layer="91">Ultrasonic connected to ADC</text>
 </plain>
 <instances>
 <instance part="D1" gate="G$1" x="165.1" y="101.6"/>
