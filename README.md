@@ -15,13 +15,13 @@ Functionallity: The robot code was basically made to test the TOUCHOSC interface
 	- One distance message box will indicate the distance to the next object (to be implemented).
 	- Current time and Smartphone battery are shown on the display
 
-##Following basic ideas and files where used:
+###Basic ideas, origin of the project:
 	
 	-ftobler 3d files printed on Lulzbot TAZ4 printer.
 	-two 28byj-48 stepper motors with driver circuit from ebay
 	-ESP8266 12E module
 	
-##Following changes where made:
+###Changes, additions:
 	- ESP was programmed with Arduino based environnement and ESP plug-in
 	- Accelstepper library http://www.airspayce.com/mikem/arduino/AccelStepper/
 	  Tutorial can be found here: https://www.pjrc.com/teensy/td_libs_AccelStepper.html
@@ -30,15 +30,15 @@ Functionallity: The robot code was basically made to test the TOUCHOSC interface
 	- Alternative accu holder to hold a 2S Lipo
 	- Alternative motor connections to simplify the wiring on the self made board.
 
-##TouchOSC: 
+###TouchOSC: 
 I discovered this app by accident when I lookted at B-Robot and similar projects. Some tests made with Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation, easy to use windows application to create the GUI, easy to load on a second or alternative platform and sizable widgets which are not yet possible on Blynk made me keep OSC for this project. Maybe I missed something on Blynk, at least it was not immediately visible that the features I missed where available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you will need to pay for the user interface you download on your phone or tablet. Here my current design:
 
 ![alt tag](https://github.com/rolfz/ESP8266_ZRobot_OSC/blob/master/osc_display.png)
 	
-##Code: ESP8266_ZRobot_OSC includes all made ESP code.
+###Code: ESP8266_ZRobot_OSC includes all made ESP code.
 
-##OSC config: Simple-Z-Robot-Iphone5.touchosc
+###OSC config: Simple-Z-Robot-Iphone5.touchosc
 			Simple-Z-Robot-Samsung.touchosc
 
-##Schematic/Wiring: will follow
+###Schematic/Wiring: will follow
 			
