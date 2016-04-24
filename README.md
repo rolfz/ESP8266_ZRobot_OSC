@@ -29,6 +29,10 @@ Following changes where made:
 	- self made board to hold the ESP module, with 2 push buttons for reset and setting programming mode, leds and connectors for the periferals.
 	- Alternative accu holder to hold a 2S Lipo
 	- Alternative motor connections to simplify the wiring on the self made board.
+
+TouchOSC: I discovered this app by accident when I lookted at B-Robot and similar projects. Some tests made with Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation, easy to use windows application to create the GUI, easy to load on a second or alternative platform and sizable widgets which are not yet possible on Blynk made me keep OSC for this project. Maybe I missed something on Blynk, at least it was not immediately visible that the features I missed where available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you will need to pay for the user interface you download on your phone or tablet. Here my current design:
+
+![alt tag](https://github.com/rolfz/ESP8266_ZRobot_OSC/blob/master/osc_display.png)
 	
 Code: ESP8266_ZRobot_OSC includes all made ESP code.
 OSC config: Simple-Z-Robot-Iphone5.touchosc
