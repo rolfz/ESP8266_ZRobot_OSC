@@ -42,5 +42,5 @@ I discovered this app by accident when I looked at B-Robot and similar projects.
 			Simple-Z-Robot-Samsung.touchosc
 
 ###Schematic/Wiring: 	
-	Schematic[Schematic!](schematic.pdf) and eagle files
+	Schematic[a relative link](schematic.pdf) and eagle files
 			
