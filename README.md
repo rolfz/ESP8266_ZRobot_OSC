@@ -3,7 +3,7 @@
 EPS8266 based Robot with OSC based remote control. Robot can be controlled by iPhone or Smartphone, both config files are included.
 The robot was based on FTobler Thingiverse 3d design http://www.thingiverse.com/thing:1230244
 
-![alt tag](https://github.com/rolfz/ESP8266_ZRobot_OSC/zrobot.jpg)
+![alt tag](https://github.com/rolfz/ESP8266_ZRobot_OSC/blob/master/zrobot.jpg)
 
 Functionallity: The robot code was basically made to test the TOUCHOSC interface. OSC allows to communicate both ways between ESP8266 and a smartphone. All code runs on the ESP module (No Arduino Hardware required).
 	- "Speed" cursor will define the speed of the step motors advance.
