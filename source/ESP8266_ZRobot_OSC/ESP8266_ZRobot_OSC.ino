@@ -20,8 +20,8 @@ http://42bots.com/tutorials/28byj-48-stepper-motor-with-uln2003-driver-and-ardui
 char ssid[] = "ZROBOT";                  // your network SSID (name)
 char pass[] = "pass";               // your network password
 #else
-char ssid[] = "BELLAVISTA2";          // your network SSID (name)
-char pass[] = "roxy2000";               // your network password
+char ssid[] = "ssid";          // your network SSID (name)
+char pass[] = "passwd";               // your network password
 #endif
 
 // UDP and communication defs  
