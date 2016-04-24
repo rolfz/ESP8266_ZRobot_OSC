@@ -41,5 +41,6 @@ I discovered this app by accident when I looked at B-Robot and similar projects.
 ###OSC config: Simple-Z-Robot-Iphone5.touchosc
 			Simple-Z-Robot-Samsung.touchosc
 
-###Schematic/Wiring: [Schematic!](schematic.pdf) and gerber files
+###Schematic/Wiring: 
+	[Schematic!](schematic.pdf) and eagle files
 			
