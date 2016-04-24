@@ -5,7 +5,8 @@ The robot was based on FTobler Thingiverse 3d design http://www.thingiverse.com/
 
 ![alt tag](https://github.com/rolfz/ESP8266_ZRobot_OSC/blob/master/zrobot.jpg)
 
-Functionallity: The robot code was basically made to test the TOUCHOSC interface. OSC allows to communicate both ways between ESP8266 and a smartphone. All code runs on the ESP module (No Arduino Hardware required).
+Functionality: The robot code was basically made to test the TOUCHOSC interface. OSC allows to communicate both 
+			   ways between ESP8266 and a smart-phone. All code runs on the ESP module (No Arduino Hardware required).
 	- "Speed" cursor will define the speed of the step motors advance.
 	- "Direction" cursor adds or deducts a value from the speed making the robot turn left-right
 	- "Reverse" button inverses the motor rotation = reverse the engine direction like a car.
@@ -22,16 +23,16 @@ Functionallity: The robot code was basically made to test the TOUCHOSC interface
 	-ESP8266 12E module
 	
 ###Changes, additions:
-	- ESP was programmed with Arduino based environnement and ESP plug-in
+	- ESP was programmed with Arduino based environment and ESP plug-in
 	- Accelstepper library http://www.airspayce.com/mikem/arduino/AccelStepper/
 	  Tutorial can be found here: https://www.pjrc.com/teensy/td_libs_AccelStepper.html
 	- LV-MAXSonar-EZ0 from Sparkfun
-	- self made board to hold the ESP module, with 2 push buttons for reset and setting programming mode, leds and connectors for the periferals.
-	- Alternative accu holder to hold a 2S Lipo
+	- self made board to hold the ESP module, with 2 push buttons for reset and setting programming mode, led and connectors for the peripherals.
+	- Alternative battery holder to hold a 2S Lipo
 	- Alternative motor connections to simplify the wiring on the self made board.
 
 ###TouchOSC: 
-I discovered this app by accident when I lookted at B-Robot and similar projects. Some tests made with Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation, easy to use windows application to create the GUI, easy to load on a second or alternative platform and sizable widgets which are not yet possible on Blynk made me keep OSC for this project. Maybe I missed something on Blynk, at least it was not immediately visible that the features I missed where available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you will need to pay for the user interface you download on your phone or tablet. Here my current design:
+I discovered this app by accident when I looked at B-Robot and similar projects. Some tests made with Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation, easy to use windows application to create the GUI, easy to load on a second or alternative platform and sizable widgets which are not yet possible on Blynk made me keep OSC for this project. Maybe I missed something on Blynk, at least it was not immediately visible that the features I missed where available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you will need to pay for the user interface you download on your phone or tablet. Here my current design:
 
 ![alt tag](https://github.com/rolfz/ESP8266_ZRobot_OSC/blob/master/osc_display.png)
 	
@@ -40,5 +41,5 @@ I discovered this app by accident when I lookted at B-Robot and similar projects
 ###OSC config: Simple-Z-Robot-Iphone5.touchosc
 			Simple-Z-Robot-Samsung.touchosc
 
-###Schematic/Wiring: will follow
+###Schematic/Wiring: schematic.pdf and gerber files
 			
