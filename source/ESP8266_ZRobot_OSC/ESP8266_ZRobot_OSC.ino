@@ -20,8 +20,8 @@ http://42bots.com/tutorials/28byj-48-stepper-motor-with-uln2003-driver-and-ardui
 char ssid[] = "ZROBOT";                  // your network SSID (name)
 char pass[] = "pass";               // your network password
 #else
-char ssid[] = "ssid";          // your network SSID (name)
-char pass[] = "passwd";               // your network password
+char ssid[] = "BELLAVISTA2";          // your network SSID (name)
+char pass[] = "roxy2000";               // your network password
 #endif
 
 // UDP and communication defs  
@@ -34,10 +34,10 @@ const IPAddress outIp(10,40,10,105);        // remote IP (not needed for receive
 const unsigned int outPort = 9999;          // remote port (not needed for receive)
 const unsigned int localPort = 8888;        // local port to listen for UDP packets (here's where we send the packets)
 
-int ledPin =  15;       //pin 13 on Arduino Uno. Pin 6 on a Teensy++2
+int LED_PIN =  15;       //pin 13 on Arduino Uno. Pin 6 on a Teensy++2
 
 // analog input for Disance sensor  
-int sensorPin = A0;
+int SENSOR_PIN = A0;
 
 OSCErrorCode error;
 unsigned int ledState = LOW;              // LOW means led is *off*
@@ -52,19 +52,19 @@ int revval=0; // reverse motors = 1
 #define STEPS_PER_OREV 32*64  // 2048 steps per rev
 #define RPM 60     // Max RPM
 #define DELAY 1    // Delay to allow Wifi to work
-#define MAX_SPEED 1000.0
+#define MAX_SPEED 2000.0
 
 #define HALFSTEP 8
 // Motor pin definitions
-#define mPin11  0    //D4  IN1 on the ULN2003 driver 1
+#define mPin11  2    //D4  IN1 on the ULN2003 driver 1
 #define mPin12  4    //D3  IN2 on the ULN2003 driver 1
-#define mPin13  2    //D2  IN3 on the ULN2003 driver 1
+#define mPin13  0    //D2  IN3 on the ULN2003 driver 1
 #define mPin14  5    //D1  IN4 on the ULN2003 driver 1
 
-#define mPin21  16   //D0   IN1 on the ULN2003 driver 1
+#define mPin21  13   //D0   IN1 on the ULN2003 driver 1
 #define mPin22  14   //D5   IN2 on the ULN2003 driver 1
 #define mPin23  12   //D6   IN3 on the ULN2003 driver 1
-#define mPin24  13   //D8   IN4 on the ULN2003 driver 1
+#define mPin24  16   //D8   IN4 on the ULN2003 driver 1
 
 // GPIO Pins for Motor Driver board
 AccelStepper Lstepper(HALFSTEP, mPin21,mPin22,mPin23,mPin24);
@@ -77,9 +77,15 @@ AccelStepper Rstepper(HALFSTEP, mPin11,mPin12,mPin13,mPin14);
 //---------------------- Init Code --------------------------------------------
 void setup() {
   
-  pinMode(BUILTIN_LED, OUTPUT);
-  digitalWrite(BUILTIN_LED, ledState);    // turn *on* led
+//  pinMode(BUILTIN_LED, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
+  
+//  digitalWrite(BUILTIN_LED, ledState);    // turn *on* led
 
+// setup ADC
+//  ESP.ADC_MODE(ADC_VCC);
+
+// setup UART
   Serial.begin(115200);
   Serial.println();
   Serial.println();
@@ -131,7 +137,7 @@ void toggleOnOff(OSCMessage &msg, int addrOffset){
   ledState = (boolean) msg.getFloat(0);
   OSCMessage msgOUT("/1/Lig");
 
-  digitalWrite(ledPin, ledState);
+  digitalWrite(LED_PIN, ledState);
 
   msgOUT.add(ledState);
   if (ledState) {
@@ -166,6 +172,8 @@ void runValue(OSCMessage &msg, int addrOffset ){
   if(runit==1)
   {  Serial.println("ON");
      msgOUT.add("/1/Logo").add("Z-Robot ON");
+     digitalWrite(LED_PIN, 1);
+
   }
   else
   {
@@ -179,6 +187,8 @@ void runValue(OSCMessage &msg, int addrOffset ){
      // and center the motor direction
      msgOUT.add("/1/Dir").add(0);
      dirval=0;
+     digitalWrite(LED_PIN, 0);
+
   }
 //  msgOUT.add(value);
 //  msgOUT.add("Hello World");
@@ -231,6 +241,17 @@ void cenSet(OSCMessage &msg, int addrOffset){
 
 }
 
+void revValue(OSCMessage &msg, int addrOffset){
+  
+  OSCMessage msgOUT("/1/RevLed");
+  revval = (int) msg.getFloat(0);
+  msgOUT.add(revval);
+  Udp.beginPacket(Udp.remoteIP(), outPort);
+  msgOUT.send(Udp); // send the bytes
+  Udp.endPacket(); // mark the end of the OSC Packet
+  msgOUT.empty(); // free space occupied by message
+
+}
 
 // add Tleft Tright
 
@@ -281,10 +302,10 @@ void pwrValue(OSCMessage &msg, int addrOffset){
   msgOUT.empty(); // free space occupied by message
 }
 
-void updateRadar(int delay)
+void updateRadar(int radarDist)
 {
   OSCMessage msgOUT("/1/Rfront"); // Rback
-  msgOUT.add(int(delay));
+  msgOUT.add(int(radarDist));
 
   Udp.beginPacket(Udp.remoteIP(), outPort);
   msgOUT.send(Udp); // send the bytes
@@ -337,11 +358,12 @@ void OSCMsgReceive(){
       msgIN.fill(Udp.read());
      
     if(!msgIN.hasError()){
-      msgIN.route("/1/Lig",toggleOnOff);
+//      msgIN.route("/1/Lig",toggleOnOff);
       msgIN.route("/1/Run",runValue);
       msgIN.route("/1/Dir",dirValue);
       msgIN.route("/1/Buz",buzSet);
       msgIN.route("/1/Cen",cenSet);
+      msgIN.route("/1/Rev",revValue);
       msgIN.route("/1/Pwr",pwrValue);
       msgIN.route("/accxyz",accelValue);
     }
@@ -355,7 +377,7 @@ void loop(){
   OSCMsgReceive();
 
 // read sensor
-//  int rDistance=analogRead(A0);
+//  int rDistance=analogRead(SENSOR_PIN);
 //  updateRadar(rDistance);
   
 // we will use dirvalue and pwrvalue to run the robot
@@ -366,9 +388,9 @@ void loop(){
  */ 
  int mixL,mixR;
  
-   mixL=pwrval-dirval;
+   mixL=pwrval+dirval;
    if(mixL>MAX_SPEED)mixL=MAX_SPEED;
-   mixR=-(pwrval+dirval);
+   mixR=-(pwrval-dirval);
    if(mixR>MAX_SPEED)mixR=MAX_SPEED;
  
   if(revval==1) // we reverse the motor sense
