@@ -6,15 +6,15 @@ The robot was based on FTobler Thingiverse 3d design http://www.thingiverse.com/
 ![Alt tag](pics/zrobot.jpg)
 
 Functionality: The robot code was basically made to test the TOUCHOSC interface. OSC allows to communicate both 
-			   ways between ESP8266 and a smart-phone. All code runs on the ESP module (No Arduino Hardware required).
-	- "Speed" cursor will define the speed of the step motors advance.
-	- "Direction" cursor adds or deducts a value from the speed making the robot turn left-right
-	- "Reverse" button inverses the motor rotation = reverse the engine direction like a car.
-	- 3 buttons "Turn Left, Center, Turn right" are preprogrammed directions for the robot
-	- "RUN" button will start the engine and also stop everything if cancelled.
-	- One status line is used to send instructions to the pilot
-	- One distance message box will indicate the distance to the next object (to be implemented).
-	- Current time and Smartphone battery are shown on the display
+	ways between ESP8266 and a smart-phone. All code runs on the ESP module (No Arduino Hardware required).
+- "Speed" cursor will define the speed of the step motors advance.
+- "Direction" cursor adds or deducts a value from the speed making the robot turn left-right
+- "Reverse" button inverses the motor rotation = reverse the engine direction like a car.
+- 3 buttons "Turn Left, Center, Turn right" are preprogrammed directions for the robot
+- "RUN" button will start the engine and also stop everything if cancelled.
+- One status line is used to send instructions to the pilot
+- One distance message box will indicate the distance to the next object (to be implemented).
+- Current time and Smartphone battery are shown on the display
 
 ### Basic ideas, origin of the project:
 
@@ -35,25 +35,25 @@ Functionality: The robot code was basically made to test the TOUCHOSC interface.
 
 ### TouchOSC:
 
-	I discovered this app by accident when I looked at B-Robot and similar projects. Some tests made with 
-	Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation,
-	easy to use windows application to create the GUI, easy to load on a second or alternative platform 
-	and sizable widgets which are not yet possible on Blynk made me keep OSC for this project. Maybe I 
-	missed something on Blynk, at least it was not immediately visible that the features I missed where 
-	available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you 
-	will need to pay for the user interface you download on your phone or tablet. 
-	My current design:
+I discovered this app by accident when I looked at B-Robot and similar projects. Some tests made with 
+Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation,
+easy to use windows application to create the GUI, easy to load on a second or alternative platform 
+and sizable widgets which are not yet possible on Blynk made me keep OSC for this project. Maybe I 
+missed something on Blynk, at least it was not immediately visible that the features I missed where 
+available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you 
+will need to pay for the user interface you download on your phone or tablet. 
+My current design:
 ![Alt tag](pics/osc_display.png)
 
 
 OSC config: 
 ----------
-		Simple-Z-Robot-Iphone5.touchosc
-		Simple-Z-Robot-Samsung.touchosc
+Simple-Z-Robot-Iphone5.touchosc
+Simple-Z-Robot-Samsung.touchosc
 	
 Code:
 ----
-	ESP8266_ZRobot_OSC.ino includes all Zrobot specific code.
+ESP8266_ZRobot_OSC.ino includes all Zrobot specific code.
 
 Schematic:
 ---------
