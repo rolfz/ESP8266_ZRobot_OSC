@@ -24,10 +24,8 @@ Basic ideas, origin of the project:
 	-ESP8266 12E module
 	
 Changes, additions:
-------------------
 	- ESP was programmed with Arduino based environment and ESP plug-in
-	- [Accelstepper library] 
-http://www.airspayce.com/mikem/arduino/AccelStepper
+	- Accelstepper library http://www.airspayce.com/mikem/arduino/AccelStepper
 	  Tutorial can be found here: https://www.pjrc.com/teensy/td_libs_AccelStepper.html
 	- LV-MAXSonar-EZ0 from Sparkfun
 	- self made board to hold the ESP module, with 2 push buttons for reset and setting programming mode, 
