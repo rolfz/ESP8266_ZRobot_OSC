@@ -23,7 +23,8 @@ Basic ideas, origin of the project:
 	-two 28byj-48 stepper motors with driver circuit from ebay
 	-ESP8266 12E module
 	
-Changes, additions:
+###Changes, additions:###
+
 	- ESP was programmed with Arduino based environment and ESP plug-in
 	- Accelstepper library http://www.airspayce.com/mikem/arduino/AccelStepper
 	  Tutorial can be found here: https://www.pjrc.com/teensy/td_libs_AccelStepper.html
@@ -33,8 +34,8 @@ Changes, additions:
 	- Alternative battery holder to hold a 2S Lipo
 	- Alternative motor connections to simplify the wiring on the self made board.
 
-TouchOSC: 
---------
+###TouchOSC: ###
+
 	I discovered this app by accident when I looked at B-Robot and similar projects. Some tests made with 
 	Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation,
 	easy to use windows application to create the GUI, easy to load on a second or alternative platform 
