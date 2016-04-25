@@ -16,8 +16,9 @@ Functionality: The robot code was basically made to test the TOUCHOSC interface.
 	- One distance message box will indicate the distance to the next object (to be implemented).
 	- Current time and Smartphone battery are shown on the display
 
-###Basic ideas, origin of the project:
-	
+Basic ideas, origin of the project:
+----------------------------------
+
 	-ftobler 3d files printed on Lulzbot TAZ4 printer.
 	-two 28byj-48 stepper motors with driver circuit from ebay
 	-ESP8266 12E module
