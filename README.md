@@ -41,14 +41,14 @@ Functionality: The robot code was basically made to test the TOUCHOSC interface.
 	available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you 
 	will need to pay for the user interface you download on your phone or tablet. 
 	My current design:
-	![alt tag](pics/osc_display.png?raw=true "Optional Title"))
+	![alt tag](pics/osc_display.png)
 
 
 ###OSC config: 
 			Simple-Z-Robot-Iphone5.touchosc
 			Simple-Z-Robot-Samsung.touchosc
 	
-###Code: ESP8266_ZRobot_OSC.ino includes all **Zrobot** specific code.
+###Code: ESP8266_ZRobot_OSC.ino includes all __Zrobot__ specific code.
 
 [Schematic/Wiring](schematic.pdf) and eagle files
 			
