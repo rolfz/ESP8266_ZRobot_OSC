@@ -16,14 +16,13 @@ Functionality: The robot code was basically made to test the TOUCHOSC interface.
 	- One distance message box will indicate the distance to the next object (to be implemented).
 	- Current time and Smartphone battery are shown on the display
 
-###Basic ideas, origin of the project:###
+### Basic ideas, origin of the project:
 
 	-ftobler 3d files printed on Lulzbot TAZ4 printer.
 	-two 28byj-48 stepper motors with driver circuit from ebay
 	-ESP8266 12E module
 	
-###Changes, additions:###
-
+###Changes, additions:
 
 	- ESP was programmed with Arduino based environment and ESP plug-in
 	- Accelstepper library (http://www.airspayce.com/mikem/arduino/AccelStepper/).
@@ -34,7 +33,7 @@ Functionality: The robot code was basically made to test the TOUCHOSC interface.
 	- Alternative battery holder to hold a 2S Lipo
 	- Alternative motor connections to simplify the wiring on the self made board.
 
-###TouchOSC: ###
+### TouchOSC:
 
 	I discovered this app by accident when I looked at B-Robot and similar projects. Some tests made with 
 	Blynk which looks even more attractive made visible the current advantage of OSC! Easy implementation,
