@@ -47,11 +47,14 @@ TouchOSC:
 ![Alt tag](pics/osc_display.png)
 
 
-###OSC config: 
-			Simple-Z-Robot-Iphone5.touchosc
-			Simple-Z-Robot-Samsung.touchosc
+OSC config: 
+----------
+		Simple-Z-Robot-Iphone5.touchosc
+		Simple-Z-Robot-Samsung.touchosc
 	
-###Code: ESP8266_ZRobot_OSC.ino includes all __Zrobot__ specific code.
+Code:
+----
+	ESP8266_ZRobot_OSC.ino includes all Zrobot specific code.
 
 [Schematic/Wiring](schematic.pdf) and eagle files
 			
