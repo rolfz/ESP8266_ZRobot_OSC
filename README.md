@@ -40,7 +40,8 @@ Functionality: The robot code was basically made to test the TOUCHOSC interface.
 	missed something on Blynk, at least it was not immediately visible that the features I missed where 
 	available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you 
 	will need to pay for the user interface you download on your phone or tablet. 
-	My current design:![alt tag](pics/osc_display.png)
+	My current design:
+	![alt tag](pics/osc_display.png)
 
 ###OSC config: 
 			Simple-Z-Robot-Iphone5.touchosc
