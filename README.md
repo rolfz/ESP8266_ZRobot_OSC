@@ -43,7 +43,7 @@ missed something on Blynk, at least it was not immediately visible that the feat
 available. TouchOSC design tool is available for free from http://hexler.net/software/touchosc, you 
 will need to pay for the user interface you download on your phone or tablet.
 
-My current design:
+My current TouchOSC design:
 
 ![Alt tag](pics/osc_display.png)
 
