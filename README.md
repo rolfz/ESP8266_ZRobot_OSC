@@ -42,6 +42,7 @@ Functionality: The robot code was basically made to test the TOUCHOSC interface.
 	will need to pay for the user interface you download on your phone or tablet. 
 	My current design:
 	![alt tag](pics/osc_display.png)
+	[![IMAGE ALT TEXT HERE](pics/osc_display.png)]
 
 ###OSC config: 
 			Simple-Z-Robot-Iphone5.touchosc
