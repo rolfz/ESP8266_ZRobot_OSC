@@ -21,7 +21,7 @@ char ssid[] = "ZROBOT";                  // your network SSID (name)
 char pass[] = "pass";               // your network password
 #else
 char ssid[] = "SSID";          // your network SSID (name)
-char pass[] = "PASS";               // your network password
+char pass[] = "PWD";               // your network password
 #endif
 
 // UDP and communication defs  
@@ -52,7 +52,7 @@ int revval=0; // reverse motors = 1
 #define STEPS_PER_OREV 32*64  // 2048 steps per rev
 #define RPM 60     // Max RPM
 #define DELAY 1    // Delay to allow Wifi to work
-#define MAX_SPEED 2000.0
+#define MAX_SPEED 1000.0
 
 #define HALFSTEP 8
 // Motor pin definitions
@@ -162,7 +162,7 @@ void toggleOnOff(OSCMessage &msg, int addrOffset){
 }
 
 
-void runValue(OSCMessage &msg, int addrOffset ){
+void runCmd(OSCMessage &msg, int addrOffset ){
 
   runit = msg.getFloat(0);
   OSCBundle msgOUT;
@@ -199,7 +199,7 @@ void runValue(OSCMessage &msg, int addrOffset ){
   msgOUT.empty(); // free space occupied by message
 }
 
-void dirValue(OSCMessage &msg, int addrOffset){
+void dirCmd(OSCMessage &msg, int addrOffset){
   
   OSCBundle msgOUT;
   
@@ -226,7 +226,7 @@ void dirValue(OSCMessage &msg, int addrOffset){
   }
 }
 
-void cenSet(OSCMessage &msg, int addrOffset){
+void cenCmd(OSCMessage &msg, int addrOffset){
   
   dirval = 0;
   OSCMessage msgOUT("/1/Dir");
@@ -241,11 +241,15 @@ void cenSet(OSCMessage &msg, int addrOffset){
 
 }
 
-void revValue(OSCMessage &msg, int addrOffset){
+void revCmd(OSCMessage &msg, int addrOffset){
   
   OSCMessage msgOUT("/1/RevLed");
   revval = (int) msg.getFloat(0);
   msgOUT.add(revval);
+  
+  Serial.print("Pwr : ");
+  Serial.println(pwrval);
+  
   Udp.beginPacket(Udp.remoteIP(), outPort);
   msgOUT.send(Udp); // send the bytes
   Udp.endPacket(); // mark the end of the OSC Packet
@@ -255,7 +259,7 @@ void revValue(OSCMessage &msg, int addrOffset){
 
 // add Tleft Tright
 
-void buzSet(OSCMessage &msg, int addrOffset){
+void buzCmd(OSCMessage &msg, int addrOffset){
   
   int ledval= (boolean) msg.getFloat(0);
   
@@ -274,7 +278,7 @@ void buzSet(OSCMessage &msg, int addrOffset){
   msgOUT.empty(); // free space occupied by message
 }
 
-void pwrValue(OSCMessage &msg, int addrOffset){
+void pwrCmd(OSCMessage &msg, int addrOffset){
  
   OSCBundle msgOUT;
   if(runit)
@@ -302,8 +306,8 @@ void pwrValue(OSCMessage &msg, int addrOffset){
   msgOUT.empty(); // free space occupied by message
 }
 
-void updateRadar(int radarDist)
-{
+void updateRadar(int radarDist){
+  
   OSCMessage msgOUT("/1/Rfront"); // Rback
   msgOUT.add(int(radarDist));
 
@@ -313,7 +317,7 @@ void updateRadar(int radarDist)
   msgOUT.empty(); // free space occupied by message
 }
 
-void accelValue(OSCMessage &msg, int addrOffset){
+void accelMsg(OSCMessage &msg, int addrOffset){
   float xval =  msg.getFloat(0);
   float yval =  msg.getFloat(1);
   float zval =  msg.getFloat(2);
@@ -339,7 +343,7 @@ void accelValue(OSCMessage &msg, int addrOffset){
   msgOUT.empty(); // free space occupied by message
 }
 
-void OSCMsgReceive(){
+void OSCMsgReceive(void){
   OSCMessage msgIN;
   int size;
   if((size = Udp.parsePacket())>0){
@@ -359,27 +363,34 @@ void OSCMsgReceive(){
      
     if(!msgIN.hasError()){
 //      msgIN.route("/1/Lig",toggleOnOff);
-      msgIN.route("/1/Run",runValue);
-      msgIN.route("/1/Dir",dirValue);
-      msgIN.route("/1/Buz",buzSet);
-      msgIN.route("/1/Cen",cenSet);
-      msgIN.route("/1/Rev",revValue);
-      msgIN.route("/1/Pwr",pwrValue);
-      msgIN.route("/accxyz",accelValue);
+      msgIN.route("/1/Run",runCmd);
+      msgIN.route("/1/Dir",dirCmd);
+      msgIN.route("/1/Buz",buzCmd);
+      msgIN.route("/1/Cen",cenCmd);
+      msgIN.route("/1/Rev",revCmd);
+      msgIN.route("/1/Pwr",pwrCmd);
+      msgIN.route("/1/accxyz",accelMsg);
     }
   }
 }
 
 //---------------------- Main code stats here----------------------------------
+unsigned long lastMillis2;
 
-void loop(){
+void loop(void){
   //process received messages
   OSCMsgReceive();
 
 // read sensor
-//  int rDistance=analogRead(SENSOR_PIN);
-//  updateRadar(rDistance);
-  
+unsigned long CurrentMillis = millis();
+// slow down ADC to keep wifi alive, we mesure every 10ms
+  if (CurrentMillis - lastMillis2 > 10)
+  {
+    int rDistance=analogRead(SENSOR_PIN);
+    updateRadar(rDistance);
+    lastMillis2 = CurrentMillis;
+  }
+
 // we will use dirvalue and pwrvalue to run the robot
 /* variables used from iPhone, smartphone
  *  dirval,direction 
