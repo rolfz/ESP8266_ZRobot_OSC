@@ -8,21 +8,18 @@
   This example code is in the public domain.
 http://42bots.com/tutorials/28byj-48-stepper-motor-with-uln2003-driver-and-arduino-uno/
 --------------------------------------------------------------------------------------------- */
+
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
+
 #include <OSCMessage.h>
 #include <OSCBundle.h>
 #include <OSCData.h>
 
 #include <AccelStepper.h>
 
-#ifdef SOFTAP
-char ssid[] = "ZROBOT";                  // your network SSID (name)
-char pass[] = "pass";               // your network password
-#else
-char ssid[] = "SSID";          // your network SSID (name)
-char pass[] = "PWD";               // your network password
-#endif
+char ssid[] = "BELLAVISTA2";          // your network SSID (name)
+char pass[] = "roxy2000";               // your network password
 
 // UDP and communication defs  
 char packetBuffer[UDP_TX_PACKET_MAX_SIZE]; //buffer to hold incoming packet,
@@ -32,7 +29,7 @@ WiFiUDP Udp;
 
 const IPAddress outIp(10,40,10,105);        // remote IP (not needed for receive)
 const unsigned int outPort = 9999;          // remote port (not needed for receive)
-const unsigned int localPort = 8888;        // local port to listen for UDP packets (here's where we send the packets)
+const unsigned int inPort = 8888;        // local port to listen for UDP packets (here's where we send the packets)
 
 int LED_PIN =  15;       //pin 13 on Arduino Uno. Pin 6 on a Teensy++2
 
@@ -91,33 +88,23 @@ void setup() {
   Serial.println();
 
   // Connect to WiFi network
-  #ifdef SOFTAP
-   Serial.print("Please connect to Robot on AP ");
-   Serial.println(ssid);
-   Serial.println("Password = " "pass""");
-   
-   WiFi.softAP(ssid, pass);
-   WiFi.mode(WIFI_AP); 
-  //WiFi.mode(WIFI_AP_STA);
-  #else
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, pass);
-  #endif
-  while (WiFi.status() != WL_CONNECTED) {
+
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+    WiFi.begin(ssid, pass);
+    while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
-  }
+    }
   Serial.println("");
-
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 
   Serial.println("Starting UDP");
-  Udp.begin(localPort);
+  Udp.begin(inPort);
   Serial.print("Local port: ");
-  Serial.println(Udp.localPort());
+  Serial.println(inPort);
 
 // init stepper
   // Set default speed to Max (doesn't move motor)
@@ -133,34 +120,6 @@ void setup() {
 
 //------------------------ Functions --------------------------------------
 
-void toggleOnOff(OSCMessage &msg, int addrOffset){
-  ledState = (boolean) msg.getFloat(0);
-  OSCMessage msgOUT("/1/Lig");
-
-  digitalWrite(LED_PIN, ledState);
-
-  msgOUT.add(ledState);
-  if (ledState) {
-    Serial.println("LED on");
-  }
-  else {
-    Serial.println("LED off");
-  }
-
-  digitalWrite(BUILTIN_LED, !ledState);    // turn *on* led
-
-  ledState = !ledState;     // toggle the state from HIGH to LOW to HIGH to LOW ...
-
-  //send osc message back to controll object in TouchOSC
-  //Local feedback is turned off in the TouchOSC interface.
-  //The button is turned on in TouchOSC interface whe the conrol receives this message.
-  Udp.beginPacket(Udp.remoteIP(), outPort);
-  msgOUT.send(Udp); // send the bytes
-  Udp.endPacket(); // mark the end of the OSC Packet
-  msgOUT.empty(); // free space occupied by message
-
-}
-
 
 void runCmd(OSCMessage &msg, int addrOffset ){
 
@@ -173,7 +132,7 @@ void runCmd(OSCMessage &msg, int addrOffset ){
   {  Serial.println("ON");
      msgOUT.add("/1/Logo").add("Z-Robot ON");
      digitalWrite(LED_PIN, 1);
-
+     msgOUT.add("/1/Msg").add("OK");
   }
   else
   {
@@ -188,10 +147,8 @@ void runCmd(OSCMessage &msg, int addrOffset ){
      msgOUT.add("/1/Dir").add(0);
      dirval=0;
      digitalWrite(LED_PIN, 0);
-
+     msgOUT.add("/1/Msg").add("OK");
   }
-//  msgOUT.add(value);
-//  msgOUT.add("Hello World");
 
   Udp.beginPacket(Udp.remoteIP(), outPort);
   msgOUT.send(Udp); // send the bytes
@@ -218,12 +175,12 @@ void dirCmd(OSCMessage &msg, int addrOffset){
 
   msgOUT.add("/1/Dir").add(dirval);
   msgOUT.add("/1/Msg").add("Start Robot first"); 
-     
+  }
   Udp.beginPacket(Udp.remoteIP(), outPort);
   msgOUT.send(Udp); // send the bytes
   Udp.endPacket(); // mark the end of the OSC Packet
   msgOUT.empty(); // free space occupied by message
-  }
+  
 }
 
 void cenCmd(OSCMessage &msg, int addrOffset){
@@ -259,19 +216,42 @@ void revCmd(OSCMessage &msg, int addrOffset){
 
 // add Tleft Tright
 
-void buzCmd(OSCMessage &msg, int addrOffset){
-  
-  int ledval= (boolean) msg.getFloat(0);
-  
-  OSCMessage msgOUT("/led");
-  if(ledval)
-  msgOUT.add(0);
+void tLeftCmd(OSCMessage &msg, int addrOffset){
+
+  OSCBundle msgOUT;
+  if(runit)
+  {
+  pwrval = 200;
+  msgOUT.add("/1/PwrVal").add(pwrval);
+  dirval = -200;
+  msgOUT.add("/1/Dir").add(dirval);
+  msgOUT.add("/1/Msg").add("OK");
+  }
   else
-  msgOUT.add(1);
-    
-  Serial.print("Led = ");
-  Serial.println(ledval);
-  
+  {
+  msgOUT.add("/1/Msg").add("Start Robot first");
+  }
+  Udp.beginPacket(Udp.remoteIP(), outPort);
+  msgOUT.send(Udp); // send the bytes
+  Udp.endPacket(); // mark the end of the OSC Packet
+  msgOUT.empty(); // free space occupied by message
+}
+
+void tRightCmd(OSCMessage &msg, int addrOffset){
+
+  OSCBundle msgOUT;
+ 
+ if(runit){
+  pwrval = 200;
+  msgOUT.add("/1/PwrVal").add(pwrval);
+  dirval = 200;
+  msgOUT.add("/1/Dir").add(dirval);
+  msgOUT.add("/1/Msg").add("OK");
+ }
+ else
+ {
+  msgOUT.add("/1/Msg").add("Start Robot first");
+ }
   Udp.beginPacket(Udp.remoteIP(), outPort);
   msgOUT.send(Udp); // send the bytes
   Udp.endPacket(); // mark the end of the OSC Packet
@@ -317,32 +297,6 @@ void updateRadar(int radarDist){
   msgOUT.empty(); // free space occupied by message
 }
 
-void accelMsg(OSCMessage &msg, int addrOffset){
-  float xval =  msg.getFloat(0);
-  float yval =  msg.getFloat(1);
-  float zval =  msg.getFloat(2);
-
-  OSCBundle msgOUT;
-//  OSCMessage msgOUT("/1/AX");
-
-//  msgOUT.add(xval);
-  msgOUT.add("/1/AX").add(xval);
-  msgOUT.add("/1/AY").add(yval);
-  msgOUT.add("/1/AZ").add(zval);
-
-  Serial.print("AX : ");
-  Serial.print(xval);
-  Serial.print(" AY : ");
-  Serial.print(yval);
-  Serial.print(" AZ : ");
-  Serial.println(zval);
-  
-  Udp.beginPacket(Udp.remoteIP(), outPort);
-  msgOUT.send(Udp); // send the bytes
-  Udp.endPacket(); // mark the end of the OSC Packet
-  msgOUT.empty(); // free space occupied by message
-}
-
 void OSCMsgReceive(void){
   OSCMessage msgIN;
   int size;
@@ -358,24 +312,23 @@ void OSCMsgReceive(void){
     #endif
     
     // read and interprete data
-    while(size--)
-      msgIN.fill(Udp.read());
+    while(size--) msgIN.fill(Udp.read());
      
     if(!msgIN.hasError()){
-//      msgIN.route("/1/Lig",toggleOnOff);
       msgIN.route("/1/Run",runCmd);
       msgIN.route("/1/Dir",dirCmd);
-      msgIN.route("/1/Buz",buzCmd);
+      msgIN.route("/1/Tleft",tLeftCmd);
+      msgIN.route("/1/Tright",tRightCmd);
       msgIN.route("/1/Cen",cenCmd);
       msgIN.route("/1/Rev",revCmd);
       msgIN.route("/1/Pwr",pwrCmd);
-      msgIN.route("/1/accxyz",accelMsg);
     }
   }
 }
 
 //---------------------- Main code stats here----------------------------------
-unsigned long lastMillis2;
+unsigned long lastMillis2; // used to delay ADC conversion to avoid hanging up WIFI
+unsigned int avDistance=0; // used to average distance over 10 samples (low-pass)
 
 void loop(void){
   //process received messages
@@ -389,6 +342,9 @@ unsigned long CurrentMillis = millis();
     int rDistance=analogRead(SENSOR_PIN);
     updateRadar(rDistance);
     lastMillis2 = CurrentMillis;
+    avDistance=(avDistance*9+rDistance)/10;
+    updateRadar(avDistance);
+//    Serial.println(avDistance);
   }
 
 // we will use dirvalue and pwrvalue to run the robot
